@@ -1,0 +1,38 @@
+extends layout
+
+block content 
+
+  h1=title 
+
+  form(action="", method="post")
+
+    div
+      label(for="firstName") First Name: 
+      input(type="text", name="firstName" required='true' placeholder='John' value=(undefined===user ? '' : user.first_name))
+
+    div
+      label(for="familyName") Family Name: 
+      input(type="text", name="familyName" required='true' placeholder='Doe' value=(undefined===user ? '' : user.family_name))
+
+    div
+      label(for="username") Username: 
+      input(type="text", name="username" required='true'  minlength='4' value=(undefined===user ? '' : user.username)) 
+
+
+    p Password minimum length eight characters, at least one letter and one number.
+
+    div 
+      label(for="password") Password: 
+      input(type="password", name="password" required='true' pattern="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$" minlength='8')
+     
+    div 
+      label(for="passwordConfim") Confirm Password: 
+      input(type="password", name="passwordConfirm" required='true' pattern="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$" minlength='8')
+
+    div
+    button Submit
+
+  if errors
+    ul
+     each error in  errors
+      li!= error.msg
