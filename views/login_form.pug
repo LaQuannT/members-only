@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1=title 
+
+  if error 
+    ul
+      each error in errors 
+        li!= error.msg
+
+  form(action="/login/password", method="post")
+    div
+      label(for="username") Username: 
+      input(type="text", name="username" required='true' autocomplete="username")
+
+    div 
+      label(for='password') Password: 
+      input(type='password', name="password", required='true' autocomplete="current-password" )
+
+    div
+      button Sign In 

@@ -2,6 +2,7 @@ const User = require("../models/user.models");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 
 exports.sign_up_get = asyncHandler(async (req, res, next) => {
   res.render("sign_up_form", { title: "Sign up" });
@@ -21,14 +22,14 @@ exports.sign_up_post = [
     .isLength({ min: 4 })
     .withMessage("Username minimum four charcters")
     .custom(async (value) => {
-      const user = await User.find({ username: value });
+      const user = await User.findOne({ username: value });
       if (user) throw new Error("Username not avaliable");
     })
     .escape(),
   body("password")
     .isLength({ min: 8 })
     .withMessage("Password minimum eight charcters"),
-  body("passwordConfim")
+  body("passwordConfirm")
     .custom((value, { req }) => {
       return value === req.body.password;
     })
@@ -51,7 +52,7 @@ exports.sign_up_post = [
         errors: errors.array(),
       });
     } else {
-      bcrypt.hash("somePassword", 10, async (err, hashedPassword) => {
+      bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
         if (err) next(err);
         else {
           newUser.password = hashedPassword;
@@ -62,3 +63,13 @@ exports.sign_up_post = [
     }
   }),
 ];
+
+exports.login_get = asyncHandler(async (req, res, next) => {
+  res.render("login_form", { title: "Sign In" });
+});
+
+exports.login_post = passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+  failureMessage: true,
+});
