@@ -1,12 +1,5 @@
-const express = require("express");
-const router = express.Router();
-
+const router = require("express").Router();
 const authenticate = require("../controllers/auth.controllers");
-
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
-});
 
 router
   .route("/sign-up")
@@ -15,5 +8,6 @@ router
 
 router.get("/login", authenticate.login_get);
 router.post("/login/password", authenticate.login_post);
+router.get("/logout", authenticate.logout);
 
 module.exports = router;

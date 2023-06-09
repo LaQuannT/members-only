@@ -70,14 +70,21 @@ exports.login_get = asyncHandler(async (req, res, next) => {
 
 exports.login_post = passport.authenticate("local", {
   successRedirect: "/",
-  failureRedirect: "/login",
+  failureRedirect: "/auth/login",
   failureMessage: true,
 });
 
-exports.loggedIn = function (req, res, next) {
+exports.logout = (req, res, next) => {
+  req.logout(function (err) {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+};
+
+exports.isLoggedIn = function (req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.redirect("/login");
+    res.redirect("/auth/login");
   }
 };

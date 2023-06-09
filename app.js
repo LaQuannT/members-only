@@ -6,11 +6,13 @@ const logger = require("morgan");
 const session = require("express-session");
 const passport = require("passport");
 const mongoose = require("mongoose");
+const isLoggedIn = require("./controllers/auth.controllers").isLoggedIn;
 
 require("dotenv").config();
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
+const indexRouter = require("./routes/index.routes");
+const usersRouter = require("./routes/users.routes");
+const authRouter = require("./routes/auth.routes");
 
 const mongoDB = process.env.DATABASE_URL;
 mongoose.connect(mongoDB, { useUnifiedTopology: true, useNewUrlParser: true });
@@ -35,6 +37,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 require("./utils/passport.auth");
 
+app.use(function (req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,7 +49,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/user", usersRouter);
+app.use("/user", isLoggedIn, usersRouter);
+app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
