@@ -1,21 +1,23 @@
 extends layout
 
 block content
-  h1=title 
+  div.container
+    if error 
+      ul
+        each error in errors 
+          li!= error.msg
+    
+    div(class='card mt-5')
+      div.card-body
+        h1(class='card-title')=title
+        form(action="/login/password", method="post")
+          div(class='mb-3')
+            label(for="username" class='form-label') Username
+            input(class='form-control' type="text", name="username" required='true' autocomplete="username")
 
-  if error 
-    ul
-      each error in errors 
-        li!= error.msg
+          div(class='mb-3')
+            label(for='password' class='form-label') Password
+            input(class='form-control' type='password', name="password", required='true' autocomplete="current-password" )
 
-  form(action="/login/password", method="post")
-    div
-      label(for="username") Username: 
-      input(type="text", name="username" required='true' autocomplete="username")
-
-    div 
-      label(for='password') Password: 
-      input(type='password', name="password", required='true' autocomplete="current-password" )
-
-    div
-      button Sign In 
+          div(class='mb-3')
+            button(class='btn btn-primary' type='submit') Sign In 

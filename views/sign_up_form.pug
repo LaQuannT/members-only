@@ -1,38 +1,38 @@
 extends layout
 
 block content 
+  div(class='container')
+    h1.mt-5=title 
 
-  h1=title 
+    form(action="", method="post" class='mt-3')
 
-  form(action="", method="post")
+      div(class="mb-3")
+        label(for="firstName" class='form-label') First Name
+        input(class='form-control' type="text", name="firstName" required='true' placeholder='John' value=(undefined===user ? '' : user.first_name))
 
-    div
-      label(for="firstName") First Name: 
-      input(type="text", name="firstName" required='true' placeholder='John' value=(undefined===user ? '' : user.first_name))
+      div(class="mb-3")
+        label(for="familyName" class='form-label') Family Name
+        input(class='form-control' type="text", name="familyName" required='true' placeholder='Doe' value=(undefined===user ? '' : user.family_name))
 
-    div
-      label(for="familyName") Family Name: 
-      input(type="text", name="familyName" required='true' placeholder='Doe' value=(undefined===user ? '' : user.family_name))
-
-    div
-      label(for="username") Username: 
-      input(type="text", name="username" required='true'  minlength='4' value=(undefined===user ? '' : user.username)) 
+      div(class="mb-3")
+        label(for="username" class='form-label') Username
+        input(class='form-control' type="text", name="username" required='true'  minlength='4' value=(undefined===user ? '' : user.username)) 
 
 
-    p Password minimum length eight characters, at least one letter and one number.
+      p(class='form-text') Password minimum length eight characters, at least one letter and one number.
 
-    div 
-      label(for="password") Password: 
-      input(type="password", name="password" required='true' pattern="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$" minlength='8')
-     
-    div 
-      label(for="passwordConfirm") Confirm Password: 
-      input(type="password", name="passwordConfirm" required='true' pattern="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$" minlength='8')
+      div(class="mb-3") 
+        label(for="password" class='form-label') Password
+        input(class='form-control' type="password", name="password" required='true' pattern="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$" minlength='8')
+      
+      div(class="mb-3") 
+        label(for="passwordConfirm" class='form-label') Confirm Password
+        input(class='form-control' type="password", name="passwordConfirm" required='true' pattern="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$" minlength='8')
 
-    div
-    button Submit
+      div(class="mb-3")
+      button(type='Submit' class='btn btn-primary') Submit
 
-  if errors
-    ul
-     each error in  errors
-      li!= error.msg
+    if errors
+      ul
+      each error in  errors
+        li!= error.msg
