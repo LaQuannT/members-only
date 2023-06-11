@@ -1,0 +1,23 @@
+extends layout
+
+block content 
+  .container
+    h2.text-center.my-5 #{title}
+
+    if errors
+      ul
+        each error in errors 
+          li!=error.msg
+
+    form(action="", method="POST")
+      .form-group.my-3
+        lable.form-label(for="title") Title
+        input.form-control(type='text', name='title' required='true' value=(undefined === artical ? '' : artical.title))
+      .form-group.mb-3
+        lable.form-label(for="text") Artical Text 
+        input.form-control(type='text', name='text' required='true' value=(undefined === artical ? '' : artical.text))
+      .form-group.mb-3
+        lable.form-label(for='date') Date
+        input.form-control(type='date' name='date' value=(undefined===artical ? '' : artical.time_stamp))
+      .form-group.text-end
+        button.btn.btn-primary(type='submit') Submit

@@ -3,7 +3,7 @@ const user = require("../controllers/user.controller");
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
-  res.redirect("/profile");
+  res.redirect("/user/profile");
 });
 
 router.get("/profile", user.profile_get);
