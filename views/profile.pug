@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  div.container
+    .card.text-center.mt-5 
+      .card-body
+        h5.card-title.mb-2 User ID 
+        p.card-text #{user._id}
+        h5.card-title.mb-2 Name
+        p.card-text #{user.name}
+        a(class='btn btn-primary' href='/user/artical/create') New Artical

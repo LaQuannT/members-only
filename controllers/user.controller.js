@@ -9,7 +9,7 @@ exports.artical_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.profile_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: user profile");
+  res.render("profile", { title: "Profile", user: req.user });
 });
 
 exports.artical_create_get = asyncHandler(async (req, res, next) => {
