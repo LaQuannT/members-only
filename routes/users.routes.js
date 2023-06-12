@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const user = require("../controllers/user.controller");
+const artical = require("../controllers/artical.controller");
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
@@ -8,23 +9,23 @@ router.get("/", function (req, res, next) {
 
 router.get("/profile", user.profile_get);
 
-router.get("/articals", user.all_articals_get);
+router.get("/myarticals", artical.get_by_author);
 
 router
   .route("/artical/create")
-  .get(user.artical_create_get)
-  .post(user.artical_create_post);
+  .get(artical.create_get)
+  .post(artical.create_post);
 
 router
   .route("/artical/:id/delete")
-  .get(user.artical_delete_get)
-  .post(user.artical_delete_post);
+  .get(artical.delete_get)
+  .post(artical.delete_post);
 
 router
   .route("/artical/:id/update")
-  .get(user.artical_update_get)
-  .post(user.artical_update_post);
+  .get(artical.update_get)
+  .post(artical.update_post);
 
-router.get("/artical/:id", user.artical_get);
+router.get("/artical/:id", artical.get_one);
 
 module.exports = router;

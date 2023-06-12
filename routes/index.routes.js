@@ -1,8 +1,7 @@
 const router = require("express").Router();
+const artical = require("../controllers/artical.controller");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express", user: req.user });
-});
+router.get("/", artical.get_all);
 
 module.exports = router;

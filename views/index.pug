@@ -1,5 +1,13 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .container
+
+    each artical in articals
+        .card.my-5
+          .card-header #{artical.title} 
+          .card-body
+            blockquote.blockquote.mb-0 
+              p #{artical.text}
+              if user
+                foot.blockquote-footer #{artical.author.username}, #{artical.date_formatted}

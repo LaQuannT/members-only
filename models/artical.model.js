@@ -6,7 +6,7 @@ const ArticalSchema = new Schema({
   title: { type: String, required: true },
   text: { type: String, required: true },
   time_stamp: { type: Date, default: Date.now() },
-  author: { type: Schema.Types.ObjectId, Ref: "User", required: true },
+  author: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 ArticalSchema.virtual("url").get(function () {
