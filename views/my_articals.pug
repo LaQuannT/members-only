@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  div.container 
+
+    each artical in articals
+      div(class="card my-3")
+        div(class="card-body")
+          h5(class="card-title") #{artical.title}
+          p(class="card-text") #{artical.text}
+          a(href=artical.url+'/update' class="btn btn-primary me-2") Update
+          a(href=artical.url+'/delete' class="btn btn-danger") Delete

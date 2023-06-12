@@ -10,7 +10,7 @@ const ArticalSchema = new Schema({
 });
 
 ArticalSchema.virtual("url").get(function () {
-  return `/artical/${this._id}`;
+  return `/user/artical/${this._id}`;
 });
 
 ArticalSchema.virtual("date_formatted").get(function () {

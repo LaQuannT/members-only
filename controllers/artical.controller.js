@@ -8,7 +8,10 @@ exports.get_all = asyncHandler(async (req, res, next) => {
 });
 
 exports.get_by_author = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED");
+  const userArticalsList = await Artical.find({ author: req.user })
+    .sort({ time_stamp: 1 })
+    .exec();
+  res.render("my_articals", { user: req.user, articals: userArticalsList });
 });
 
 exports.get_one = asyncHandler(async (req, res, next) => {
