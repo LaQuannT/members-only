@@ -66,9 +66,43 @@ exports.delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.update_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED");
+  const artical = await Artical.findById(req.params.id);
+  res.render("artical_form", { title: "Update Artical", artical });
 });
 
-exports.update_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED");
-});
+exports.update_post = [
+  body("title")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Title field must not be empty")
+    .escape(),
+  body("text")
+    .trim()
+    .isLength({ min: 1 })
+    .withMessage("Text field must not be empty")
+    .escape(),
+  body("date", "Invalid date").isISO8601().isDate(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const artical = new Artical({
+      title: req.body.title,
+      text: req.body.text,
+      time_stamp: req.body.time_stamp,
+      author: req.user._id,
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      res.redirect("artical_form", {
+        title: "Update Artical",
+        artical,
+        errors: errors.array(),
+      });
+    } else {
+      await Artical.findByIdAndUpdate(req.params.id, artical, {});
+      res.redirect("/user/myarticals");
+    }
+  }),
+];
