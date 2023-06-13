@@ -26,6 +26,4 @@ router
   .get(artical.update_get)
   .post(artical.update_post);
 
-router.get("/artical/:id", artical.get_one);
-
 module.exports = router;

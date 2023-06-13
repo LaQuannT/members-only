@@ -14,10 +14,6 @@ exports.get_by_author = asyncHandler(async (req, res, next) => {
   res.render("my_articals", { user: req.user, articals: userArticalsList });
 });
 
-exports.get_one = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: single artical ");
-});
-
 exports.create_get = asyncHandler(async (req, res, next) => {
   res.render("artical_form", { title: "New Artical", user: req.user });
 });
@@ -60,11 +56,13 @@ exports.create_post = [
 ];
 
 exports.delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED");
+  const artical = await Artical.findById(req.params.id).exec();
+  res.render("delete_artical", { artical });
 });
 
 exports.delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED");
+  await Artical.findByIdAndRemove(req.params.id);
+  res.redirect("/user/myarticals");
 });
 
 exports.update_get = asyncHandler(async (req, res, next) => {

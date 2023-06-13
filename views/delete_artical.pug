@@ -1,0 +1,11 @@
+extends layout 
+
+block content 
+  div.container
+    
+    h2 Delete: #{artical.title}
+
+    p Are you sure do you want to delete this artical?
+    form(action="", method="POST")
+      input(type='hidden' name='articalid' value=artical._id)
+      button(type='submit' class='btn btn-danger') Delete
